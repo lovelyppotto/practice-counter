@@ -1,53 +1,30 @@
-import { useState, useRef } from "react";
-import Result from './Result'
 import './Controller.css'
 
-const Controller = () => {
-  const [count, setCount] = useState(0)
-  const countRef = useRef()
-
-  const onClickHandler = (e) => {
-    const id = e.target.id
-    // e.target.value 의 타입이 String이므로 숫자 형변환 필요
-    const value = Number(e.target.value)
-
-    switch (id) {
-      case "first":
-        setCount(value - 1)
-        break
-      case "second":
-        setCount(value - 10)
-        break
-      case "third":
-        setCount(value - 100)
-        break
-      // 여기서 e.target.value 사용시 더하기연산이 문자열로 이루어짐
-      // 문자열 뺄셈 연산은 없지만 더하기 연산이 있어서 발생하는 문제
-      case "forth":
-        setCount(value + 100)
-        break
-      case "fifth":
-        setCount(value + 10)
-        break
-      case "sixth":
-        setCount(value + 1)
-        break
-      default : 
-        break
-    } 
-  }
-
+const Controller = ({handleSetCount}) => {
   return (
-    <div>
-        <Result count={count} />
-      <div className="buttons">
-          <button ref={countRef} value={count} id="first" onClick={onClickHandler}>-1</button>
-          <button ref={countRef} value={count} id="second" onClick={onClickHandler}>-10</button>
-          <button ref={countRef} value={count} id="third" onClick={onClickHandler}>-100</button>
-          <button ref={countRef} value={count} id="forth" onClick={onClickHandler}>+100</button>
-          <button ref={countRef} value={count} id="fifth" onClick={onClickHandler}>+10</button>
-          <button ref={countRef} value={count} id="sixth" onClick={onClickHandler}>+1</button>
-      </div>
+    <div className="buttons">
+        <button onClick={() => handleSetCount(-1)}>-1</button>
+        {/* 
+          화살표 함수를 사용하는 이유
+          = 클릭 이벤트가 발생했을 때만 실행되도록 하기 위해서!
+            ( 함수의 실행 시점 제어 )
+
+          onClick={function(){ handleSetCount(-1) } 과 동일한 코드
+        */}
+        <button onClick={() => handleSetCount(-10)}>-10</button>
+        <button onClick={() => handleSetCount(-100)}>-100</button>
+        <button onClick={() => handleSetCount(100)}>+100</button>
+        <button onClick={() => handleSetCount(10)}>+10</button>
+        <button onClick={() => handleSetCount(1)}>+1</button>
+        {/* 
+          <button onClick={handleSetCount(1)}>+1</button> 
+          자바스크립트는 함수명에 괄호를 붙이게 되면 그 즉시 함수가 실행됨
+          
+          따라서, 위와 같은 방식으로 작성시 렌더링이 될 때마다 바로 실행된다
+          => 무한으로 계속 1씩 증가하게 됨
+
+          onClick={setCount(count + 1)} 과 동일한 코드 
+        */}
     </div>
   );
 }

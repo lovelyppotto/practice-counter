@@ -1,7 +1,6 @@
 import './Result.css'
 
 const Result = ({count}) => {
-
 return(
     <div className="container">
         <div className="contents">
