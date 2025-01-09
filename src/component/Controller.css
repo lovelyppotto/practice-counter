@@ -1,0 +1,14 @@
+.buttons{
+    display: flex;
+    padding: 15px;
+    background-color: rgb(229, 226, 226);
+    border: 1px solid black;
+    border-radius: 10px;
+    justify-content: center;
+}
+
+button {
+    margin-left: 5px;
+    padding: 3px;
+    
+}
